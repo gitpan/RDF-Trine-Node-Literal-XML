@@ -1,0 +1,37 @@
+NAME
+    RDF::Trine::Node::Literal::XML - RDF Node class for XMLLiterals
+
+METHODS
+    "new ( $node )"
+    "new ( $string [ , $lang, $datatype ] )"
+        Returns a new XML Literal object. This method can be used in two
+        different ways: It can either be passed a string or an XML::LibXML
+        node.
+
+        In the case of passing a string, this method follows the same API as
+        the RDF::Trine::Node::Literal constructor, but:
+
+        * $string must be a well-balanced XML fragment * $lang will be
+        ignored * $datatype will be ignored and set to
+        'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral'
+
+        In the case of using a XML::LibXML node $node, the Node may be one
+        of these types or a subclass thereof:
+
+          * XML::LibXML::Document
+          * XML::LibXML::DocumentFragment
+          * XML::LibXML::Element
+          * XML::LibXML::CDATASection
+          * XML::LibXML::NodeList
+
+        If the string is not a valid XML fragment, and the $node is not of
+        one of the above types, this method throws a RDF::Trine::Error
+        exception.
+
+    "xml_element"
+        Returns the XML::LibXML node for the XML Literal.
+
+AUTHOR
+    First created by Gregory Todd Williams <gwilliams@cpan.org>, modfied and
+    maintained by Kjetil Kjernsmo <kjetilk@cpan.org>
+
