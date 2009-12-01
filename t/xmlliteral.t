@@ -1,4 +1,4 @@
-use Test::More qw(no_plan); #tests => 5;
+use Test::More;
 use Test::Exception;
 
 use strict;
@@ -16,6 +16,7 @@ throws_ok {
 	my $l		= RDF::Trine::Node::Literal::XML->new( '<foo>bar');
 } 'RDF::Trine::Error', 'throws on invalid xml without optional arguments';
 
+
 throws_ok {
 	my $l		= RDF::Trine::Node::Literal::XML->new( '<foo>', undef, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral' );
 } 'RDF::Trine::Error', 'throws on invalid xml';
@@ -29,6 +30,7 @@ lives_ok {
 lives_ok {
 	my $l		= RDF::Trine::Node::Literal::XML->new( '<foo/>' );
 } 'lives on valid empty-element xml without optional arguments';
+
 
 
 lives_ok {
@@ -117,3 +119,5 @@ lives_ok {
   my $l	= RDF::Trine::Node::Literal::XML->new( $nodes );
 } 'lives on nodelist';
 
+
+done_testing;

@@ -11,8 +11,11 @@ METHODS
         In the case of passing a string, this method follows the same API as
         the RDF::Trine::Node::Literal constructor, but:
 
-        * $string must be a well-balanced XML fragment * $lang will be
-        ignored * $datatype will be ignored and set to
+        * $string must be a well-balanced XML fragment * $lang is optional,
+        but if a language code is present it will be used as the value of
+        "xml:lang" attribute(s) on the root XML element(s) of the literal.
+        If the element already has an "xml:lang" attribute it will be
+        overwritten. * $datatype will be ignored and set to
         'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral'
 
         In the case of using a XML::LibXML node $node, the Node may be one
