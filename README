@@ -26,6 +26,7 @@ METHODS
           * XML::LibXML::Element
           * XML::LibXML::CDATASection
           * XML::LibXML::NodeList
+          * XML::LibXML::Text
 
         If the string is not a valid XML fragment, and the $node is not of
         one of the above types, this method throws a RDF::Trine::Error

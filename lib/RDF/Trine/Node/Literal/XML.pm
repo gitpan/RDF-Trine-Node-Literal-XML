@@ -23,7 +23,7 @@ use XML::LibXML qw(:ns);
 
 our ($VERSION, %XML_FRAGMENTS);
 BEGIN {
-	$VERSION	= '0.13';
+	$VERSION	= '0.14_2';
 }
 
 ######################################################################
@@ -46,7 +46,6 @@ RDF::Trine::Node::Literal constructor, but:
 * $lang is optional, but if a language code is present it will be used as the value of C<< xml:lang >> attribute(s) on the root XML element(s) of the literal. If the element already has an C<< xml:lang >> attribute it will be overwritten.
 * $datatype will be ignored and set to 'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral'
 
-
 In the case of using a XML::LibXML node C<< $node >>,
 the Node may be one of these types or a subclass thereof:
 
@@ -55,6 +54,7 @@ the Node may be one of these types or a subclass thereof:
   * XML::LibXML::Element
   * XML::LibXML::CDATASection
   * XML::LibXML::NodeList
+  * XML::LibXML::Text
 
 If the string is not a valid XML fragment, and the C<< $node >> is not
 of one of the above types, this method throws a RDF::Trine::Error exception.
@@ -111,7 +111,16 @@ sub new {
 	if (ref($input) && (! $typeok)) { # Then it is neither a string nor a good type
 	  throw RDF::Trine::Error -text => ref($input) . " is not a valid type.";
 	}
-	
+
+	# If we have an empty string, just create an empty text node
+	if (length($input) == 0) {
+	  my $self = $class->SUPER::_new( $input, undef, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral' );
+
+	  $XML_FRAGMENTS{ refaddr( $self ) }	= XML::LibXML::Text->new($input);
+	  return $self;
+	}
+
+
         # Last chance is that it is a string with valid XML
         my $parser = XML::LibXML->new();
         my $doc = eval { $parser->parse_balanced_chunk( $input ) };
@@ -157,6 +166,7 @@ sub _check_type {
 	  $type->isa('XML::LibXML::DocumentFragment') ||
 	  $type->isa('XML::LibXML::Element') ||
 	  $type->isa('XML::LibXML::CDATASection') ||
+	  $type->isa('XML::LibXML::Text') ||
 	  $type->isa('XML::LibXML::NodeList') );
 }
 
