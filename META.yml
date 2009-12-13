@@ -26,4 +26,4 @@ requires:
   XML::LibXML: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.14_3
+version: 0.14

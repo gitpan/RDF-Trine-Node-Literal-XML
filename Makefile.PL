@@ -22,23 +22,10 @@ requires		'Scalar::Util'				=> 0;
 requires		'XML::LibXML'				=> 0;
 requires		'Error'					=> 0;
 
-# We need libxml2 at least 2.6.
 
-# If we're on Debian, install the -dev:
-dpkg_requires 'libxml2-dev';
-
-
-# Thanks to Chris 'BinGOs' Williams for this
-my $version = 0;
-if ( can_run('xml2-config') ) {
-  $version = `xml2-config --version`;
-  chomp $version;
-  if ($version lt '2.6.23') {
-    die "Your libxml2 is too old. You need at least 2.6.23 to comply with canonicalisation rules";
-  }
-} else {
-  warn "Cannot determine your libxml2 version. You need at least 2.6.23 to comply with canonicalisation rules";
-}
+use XML::LibXML;
+use Carp;
+croak "You need libxml2 of at least 2.6.23 for canonicalisation to work properly" unless (XML::LibXML::LIBXML_VERSION >= 20623);
 
 
 
