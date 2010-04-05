@@ -1,6 +1,3 @@
-use strict;
-use warnings;
-
 use inc::Module::Install;
 
 license			'perl';
@@ -16,6 +13,11 @@ test_requires		'Test::Exception'			=> 0;
 
 include                 'Test::Signature';
 
+auto_set_repository;
+auto_set_bugtracker;
+
+configure_requires     	'XML::LibXML'				=> 0;
+configure_requires     	'Carp'				        => 0;
 
 requires 		'RDF::Trine'				=> 0.111;
 requires		'Scalar::Util'				=> 0;
@@ -25,9 +27,9 @@ requires		'Error'					=> 0;
 
 use XML::LibXML;
 use Carp;
-croak "You need libxml2 of at least 2.6.23 for canonicalisation to work properly" unless (XML::LibXML::LIBXML_VERSION >= 20623);
+croak "You need libxml2 of at least 2.6.27 for canonicalisation to work properly" unless (XML::LibXML::LIBXML_VERSION >= 20627);
 
-
+write_doap_changes;
 
 sign;
 

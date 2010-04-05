@@ -1,6 +1,9 @@
+Changes
+Changes.ttl
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
+inc/Module/Install/DOAPChangeSets.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Include.pm
 inc/Module/Install/Makefile.pm
@@ -15,8 +18,9 @@ MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
 README
-SIGNATURE
 t/00signature.t
 t/lang.t
 t/namespaces.t
 t/xmlliteral.t
+xt/01critic.t
+SIGNATURE                                Public-key signature (added by MakeMaker)
