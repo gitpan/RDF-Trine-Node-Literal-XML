@@ -1,9 +1,10 @@
-use Test::More;
+use Test::More tests => 37;
 use Test::Exception;
+use Test::NoWarnings;
 
 use strict;
 use warnings;
-no warnings 'redefine';
+
 
 use_ok( 'RDF::Trine::Node::Literal::XML' );
 use_ok( 'XML::LibXML' );
@@ -100,6 +101,7 @@ lives_ok {
 	my $l	= RDF::Trine::Node::Literal::XML->new( $text );
 } 'lives on text node';
 
+
 lives_ok { 
   my $parser = XML::LibXML->new();
   my $doc = $parser->parse_string( '<bar>baz</bar>');
@@ -112,6 +114,19 @@ lives_ok {
   my $doc = $parser->parse_balanced_chunk( '<bar>baz</bar>');
   my $l	= RDF::Trine::Node::Literal::XML->new( $doc );
 } 'lives on documentfragment node';
+
+lives_ok { 
+  my $parser = XML::LibXML->new();
+  my $doc = $parser->parse_string( '<bar>baz</bar>');
+  my $l	= RDF::Trine::Node::Literal::XML->new( $doc, 'tlh' );
+} 'lives on document node with lang';
+
+
+lives_ok { 
+  my $parser = XML::LibXML->new();
+  my $doc = $parser->parse_balanced_chunk( '<bar>baz</bar>');
+  my $l	= RDF::Trine::Node::Literal::XML->new( $doc , 'tlh' );
+} 'lives on documentfragment node with lang';
 
 
 lives_ok { 
@@ -127,5 +142,10 @@ lives_ok {
   my $l	= RDF::Trine::Node::Literal::XML->new( $nodes );
 } 'lives on nodelist';
 
+lives_ok { 
+  my $parser = XML::LibXML->new();
+  my $doc = $parser->parse_string( '<root><bar>baz</bar><foo>dahut</foo></root>');
+  my $nodes = $doc->findnodes('/root/*');
+  my $l	= RDF::Trine::Node::Literal::XML->new( $nodes, 'tlh' );
+} 'lives on nodelist with lang';
 
-done_testing;
